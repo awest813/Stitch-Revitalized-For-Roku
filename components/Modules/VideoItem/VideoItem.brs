@@ -1,9 +1,6 @@
 sub init()
     m.itemlabel = m.top.findNode("itemLabel")
     m.itemmask = m.top.findNode("itemMask")
-end sub
-
-sub showcontent()
     m.timestampRect = m.top.findNode("timestampRect")
     m.timestampLabel = m.top.findNode("timestampLabel")
     m.itemposter = m.top.findNode("itemPoster")
@@ -17,6 +14,26 @@ sub showcontent()
     m.runtimeLabel = m.top.findNode("runtimeLabel")
     m.lowLatencyIcon = m.top.findNode("lowLatencyIcon")
     m.lowLatencyBg = m.top.findNode("lowLatencyBg")
+end sub
+
+' Reset all toggleable nodes to their default visible state before each
+' content type configures its own layout. RowList recycles item components,
+' so state from a previous content type would otherwise bleed through.
+sub resetVisibility()
+    if m.itemposter = invalid then return
+    m.itemposter.visible = true
+    if m.circlePoster <> invalid then m.circlePoster.visible = false
+    if m.liveicon <> invalid then m.liveicon.visible = true
+    if m.itemViewers <> invalid then m.itemViewers.visible = true
+    if m.viewsRect <> invalid then m.viewsRect.visible = true
+    if m.runtimeRect <> invalid then m.runtimeRect.visible = true
+    if m.runtimeLabel <> invalid then m.runtimeLabel.visible = true
+    if m.timestampLabel <> invalid then m.timestampLabel.visible = true
+    if m.timestampRect <> invalid then m.timestampRect.visible = true
+end sub
+
+sub showcontent()
+    resetVisibility()
     GlobalSettings()
     if m.top.itemContent.contentType = "GAME"
         GameSettings()
@@ -45,6 +62,11 @@ sub GlobalSettings()
 end sub
 
 sub GameSettings()
+    if m.itemposter = invalid then return
+    if m.runtimeRect = invalid or m.runtimeLabel = invalid then return
+    if m.itemSubtitle = invalid or m.itemThirdTitle = invalid then return
+    if m.liveicon = invalid or m.itemViewers = invalid or m.viewsRect = invalid then return
+    if m.timestampLabel = invalid or m.timestampRect = invalid then return
     m.runtimeRect.visible = false
     m.runtimeLabel.visible = false
     m.itemposter.width = 188
@@ -66,9 +88,16 @@ sub GameSettings()
 end sub
 
 sub LiveSettings()
+    if m.itemposter = invalid then return
+    if m.itemViewers = invalid or m.viewsRect = invalid then return
+    if m.itemSubtitle = invalid or m.itemThirdTitle = invalid then return
+    if m.timestampLabel = invalid or m.timestampRect = invalid then return
     m.itemViewers.text = m.top.itemContent.viewersDisplay
-    m.viewsRect.height = m.itemViewers.boundingRect().height
-    m.viewsRect.width = m.itemViewers.boundingRect().width + 6
+    try
+        m.viewsRect.height = m.itemViewers.boundingRect().height
+        m.viewsRect.width = m.itemViewers.boundingRect().width + 6
+    catch e
+    end try
     m.itemposter.uri = m.top.itemContent.previewImageURL
     m.itemSubtitle.text = m.top.itemContent.streamerDisplayName
     m.itemThirdTitle.text = m.top.itemContent.gameDisplayName
@@ -93,14 +122,21 @@ sub LiveSettings()
 end sub
 
 sub VodSettings()
+    if m.itemposter = invalid then return
+    if m.liveicon = invalid then return
+    if m.itemViewers = invalid or m.viewsRect = invalid then return
+    if m.itemSubtitle = invalid or m.itemThirdTitle = invalid then return
+    if m.timestampLabel = invalid or m.timestampRect = invalid then return
     m.liveicon.visible = false
     m.itemViewers.text = m.top.itemContent.viewersDisplay
-    m.itemThirdTitle.text = m.top.itemContent.gameDisplayName
-    m.viewsRect.height = m.itemViewers.boundingRect().height
-    m.viewsRect.width = m.itemViewers.boundingRect().width + 6
-    m.timestampLabel.text = m.top.itemContent.relativePublishDate
-    m.timestampRect.height = m.timestampLabel.boundingRect().height
-    m.timestampRect.width = m.timestampLabel.boundingRect().width + 6
+    try
+        m.viewsRect.height = m.itemViewers.boundingRect().height
+        m.viewsRect.width = m.itemViewers.boundingRect().width + 6
+        m.timestampLabel.text = m.top.itemContent.relativePublishDate
+        m.timestampRect.height = m.timestampLabel.boundingRect().height
+        m.timestampRect.width = m.timestampLabel.boundingRect().width + 6
+    catch e
+    end try
     m.itemposter.uri = m.top.itemContent.previewImageURL
     m.itemSubtitle.text = m.top.itemContent.streamerDisplayName
     m.itemThirdTitle.text = m.top.itemContent.gameDisplayName
@@ -111,14 +147,21 @@ sub VodSettings()
 end sub
 
 sub ClipSettings()
+    if m.itemposter = invalid then return
+    if m.liveicon = invalid then return
+    if m.itemViewers = invalid or m.viewsRect = invalid then return
+    if m.itemSubtitle = invalid or m.itemThirdTitle = invalid then return
+    if m.timestampLabel = invalid or m.timestampRect = invalid then return
     m.liveicon.visible = false
     m.itemViewers.text = m.top.itemContent.viewersDisplay
-    m.itemThirdTitle.text = m.top.itemContent.gameDisplayName
-    m.viewsRect.height = m.itemViewers.boundingRect().height
-    m.viewsRect.width = m.itemViewers.boundingRect().width + 6
-    m.timestampLabel.text = m.top.itemContent.relativePublishDate
-    m.timestampRect.height = m.timestampLabel.boundingRect().height
-    m.timestampRect.width = m.timestampLabel.boundingRect().width + 6
+    try
+        m.viewsRect.height = m.itemViewers.boundingRect().height
+        m.viewsRect.width = m.itemViewers.boundingRect().width + 6
+        m.timestampLabel.text = m.top.itemContent.relativePublishDate
+        m.timestampRect.height = m.timestampLabel.boundingRect().height
+        m.timestampRect.width = m.timestampLabel.boundingRect().width + 6
+    catch e
+    end try
     m.itemposter.uri = m.top.itemContent.previewImageURL
     m.itemSubtitle.text = m.top.itemContent.streamerDisplayName
     m.itemThirdTitle.text = m.top.itemContent.gameDisplayName
@@ -129,6 +172,12 @@ sub ClipSettings()
 end sub
 
 sub UserSettings()
+    if m.itemposter = invalid then return
+    if m.runtimeRect = invalid or m.runtimeLabel = invalid then return
+    if m.circlePoster = invalid then return
+    if m.liveicon = invalid or m.itemViewers = invalid or m.viewsRect = invalid then return
+    if m.itemSubtitle = invalid or m.itemThirdTitle = invalid then return
+    if m.timestampLabel = invalid or m.timestampRect = invalid then return
     m.runtimeRect.visible = false
     m.runtimeLabel.visible = false
     m.itemposter.visible = false

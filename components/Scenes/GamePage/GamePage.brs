@@ -30,6 +30,7 @@ function buildContentNodeFromShelves(streams)
             row = createObject("RoSGNode", "ContentNode")
         end if
         stream = streams[i]
+        if stream = invalid or stream.node = invalid or stream.node.broadcaster = invalid then continue for
         row.title = ""
         rowItem = createObject("RoSGNode", "TwitchContentNode")
         rowItem.contentId = stream.node.Id

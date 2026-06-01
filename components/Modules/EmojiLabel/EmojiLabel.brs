@@ -23,11 +23,14 @@ sub init()
     m.top.observeField("emojiSize", "updateComponents")
     m.top.observeField("maxWidth", "updateComponents")
     m.timer = m.top.findNode("timer")
-    m.timer.observeField("fire", "onTimerFireChange")
+    if m.timer <> invalid
+        m.timer.observeField("fire", "onTimerFireChange")
+    end if
     setText()
 end sub
 
 sub onTimerFireChange() as void
+    if m.animation = invalid or m.timer = invalid then return
     m.animation.repeat = false
     m.animation.control = "stop"
     m.components.translation = [0, 0]
@@ -35,6 +38,7 @@ sub onTimerFireChange() as void
 end sub
 
 sub doScroll()
+    if m.animation = invalid or m.timer = invalid then return
     if m.top.repeatCount <> invalid
         if m.top.repeatCount <> 0
             m.animation.repeat = true
@@ -116,9 +120,15 @@ sub updateComponents()
         if m.top.maxWidth = 0
             m.top.maxWidth = m.top.width
         end if
-        m.animation.duration = (m.top.width / m.top.maxWidth)
-        m.timer.duration = (m.top.width / m.top.maxWidth)
-        m.vector.keyValue = [[0, 0], [innerWidth, 0]]
+        if m.animation <> invalid
+            m.animation.duration = (m.top.width / m.top.maxWidth)
+        end if
+        if m.timer <> invalid
+            m.timer.duration = (m.top.width / m.top.maxWidth)
+        end if
+        if m.vector <> invalid
+            m.vector.keyValue = [[0, 0], [innerWidth, 0]]
+        end if
 
         m.top.clippingRect = {
             width: m.top.maxWidth,

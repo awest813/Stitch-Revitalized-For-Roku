@@ -177,6 +177,7 @@ sub updateRowList(contentCollection)
 end sub
 
 sub handleItemSelected()
+    if m.rowlist.content = invalid then return
     selectedRow = m.rowlist.content.getchild(m.rowlist.rowItemSelected[0])
     selectedItem = selectedRow.getChild(m.rowlist.rowItemSelected[1])
     m.top.playContent = true
