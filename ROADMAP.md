@@ -38,11 +38,11 @@ This roadmap describes the path toward full parity with the official Twitch app 
 - [x] BTTV animated emotes (use `animated/1x.gif` endpoint when `animated: true`)
 - [x] FrankerFaceZ global emote set (via BetterTTV CDN global FFZ endpoint)
 - [x] Twitch channel point/reward emotes (`custom-reward-id` tag — highlights message with a reward background)
-- [ ] Emote picker overlay so users can browse and insert emotes while composing a message
+- [x] Emote picker overlay so users can browse and insert emotes while composing a message (shipped in v2.5)
 
 ---
 
-## ✅ Completed (v2.5 — this release)
+## ✅ Completed (v2.5)
 
 ### Chat — Emote Picker
 - [x] Emote picker overlay so users can browse and insert emotes while composing a message
@@ -54,7 +54,20 @@ This roadmap describes the path toward full parity with the official Twitch app 
 
 ---
 
-## 🔜 Near-term (v2.6 — next milestone)
+## ✅ Completed (v2.6 — this release)
+
+### Rebrand & Polish
+- [x] Rebranded channel to **Twaruto** (`Twaruto.zip` package, updated README and tooling)
+- [x] UI/UX overhaul: purple accent, login card redesign, page headers, scene backgrounds, loading spinners
+- [x] Deep link launch support and splash screen color aligned with Twitch dark theme
+- [x] Remote control crash fix during video playback
+- [x] Emoji variation selector (FE0F) rendering fix in chat
+- [x] Defensive nil-guard fixes ported from upstream jeremy-albinet/main
+- [x] Bumped app version to 2.6.0
+
+---
+
+## 🔜 Near-term (v2.7 — next milestone)
 
 ### Feature Parity with Twitch for Android
 - [ ] **Clips** — record and submit a clip from the current stream via the `createClip` Helix API endpoint
