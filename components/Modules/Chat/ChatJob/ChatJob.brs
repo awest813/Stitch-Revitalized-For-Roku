@@ -131,12 +131,16 @@ sub main()
                     if sendWaitingMessage <> invalid
                         if sendWaitingMessage = true
                             if commentAge >= m.delay
+                                ' Read again at the top of the while-true loop; lint can't see the back-edge
+                                'bs:disable-next-line
                                 sendWaitingMessage = false
                                 ' m.top.nextCommentObj = MessageParser("display-name=System;user-type= :test!test@test.tmi.twitch.tv PRIVMSG #test :ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream || ReSyncing Chat To Stream  ")
                             else
                                 if queue[0] <> invalid
                                     if receivedNewMessage
                                         m.top.nextCommentObj = MessageParser(queue[0])
+                                        ' Read again at the top of the while-true loop; lint can't see the back-edge
+                                        'bs:disable-next-line
                                         receivedNewMessage = false
                                     end if
                                 end if

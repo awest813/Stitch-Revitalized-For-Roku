@@ -77,6 +77,51 @@
             <translation>Velocidad de fotogramas del vídeo</translation>
         </message>
         <message>
+            <source>Home</source>
+            <translation>Descubrir</translation>
+            <context>User's "home" page / fyp</context>
+        </message>
+        <message>
+            <source>Viewers</source>
+            <translation>espectadores</translation>
+            <context>displayed after the count of current viewership of a stream. i.e. this streamer has 200 viewers</context>
+        </message>
+        <message>
+            <source>Views</source>
+            <translation>Vistas</translation>
+            <context>The count of users that have watched a VOD/CLIP</context>
+        </message>
+        <message>
+            <source>Followers</source>
+            <translation>Seguidores</translation>
+            <context>Count of users that are currenlty 'following' a user on their Twitch account</context>
+        </message>
+        <message>
+            <source>Log Out</source>
+            <translation>Cerrar sesión</translation>
+            <context>Shown on the user's profile page to disconnect their account from the app</context>
+        </message>
+        <message>
+            <source>followedLiveUsers</source>
+            <translation>¡Están en vivo ahora!</translation>
+            <context>Title shown above a list of streamers that the app user follows that are currently live streaming</context>
+        </message>
+        <message>
+            <source>followedOfflineUsers</source>
+            <translation>Canales sin conexión</translation>
+            <context>Shown above a list of streamers that the app user follows that are not currently live</context>
+        </message>
+        <message>
+            <source>Channels</source>
+            <translation>Canales</translation>
+            <context>Shown above a list of streamers in the search results page</context>
+        </message>
+        <message>
+            <source>VODs</source>
+            <translation>Transmisiones anteriores</translation>
+            <context>Shown above a list of past stream broadcasts in the search results page</context>
+        </message>
+        <message>
             <source>Something went wrong</source>
             <translation>Algo salió mal</translation>
             <context>Title of the error message shown when a page fails to load</context>
