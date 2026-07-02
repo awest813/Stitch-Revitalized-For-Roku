@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Centered empty/error state message. Place the node at the point the
+     message should be centered on; labels extend 400px to either side. -->
+<component name="StatusMessage" extends="Group">
+    <interface>
+        <field id="title" type="string" alias="titleLabel.text" />
+        <field id="subtitle" type="string" alias="subtitleLabel.text" />
+    </interface>
+    <children>
+        <Label
+            id="titleLabel"
+            translation="[-400, 0]"
+            width="800"
+            horizAlign="center"
+            color="0xEFEFF1FF">
+            <Font role="font" uri="pkg:/fonts/Archivo-Bold.otf" size="24" />
+        </Label>
+        <Label
+            id="subtitleLabel"
+            translation="[-400, 42]"
+            width="800"
+            horizAlign="center"
+            color="0xADADB8FF">
+            <Font role="font" uri="pkg:/fonts/Archivo-Regular.otf" size="18" />
+        </Label>
+    </children>
+</component>

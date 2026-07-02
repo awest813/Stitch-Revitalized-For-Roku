@@ -76,5 +76,55 @@
             <source>Video Framerate</source>
             <translation>Velocidad de fotogramas del vídeo</translation>
         </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Algo salió mal</translation>
+            <context>Title of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Check your internet connection and try again.</source>
+            <translation>Comprueba tu conexión a internet e inténtalo de nuevo.</translation>
+            <context>Subtitle of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Nothing here yet</source>
+            <translation>Aún no hay nada aquí</translation>
+            <context>Title shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>Follow some channels and they will show up here.</source>
+            <translation>Sigue algunos canales y aparecerán aquí.</translation>
+            <context>Subtitle shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>No live channels</source>
+            <translation>No hay canales en vivo</translation>
+            <context>Title shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>Nobody is streaming this category right now.</source>
+            <translation>Nadie está transmitiendo en esta categoría en este momento.</translation>
+            <context>Subtitle shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>No results found</source>
+            <translation>No se encontraron resultados</translation>
+            <context>Title shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Try a different search term.</source>
+            <translation>Prueba con otro término de búsqueda.</translation>
+            <context>Subtitle shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Requesting code...</source>
+            <translation>Solicitando código...</translation>
+            <context>Placeholder shown in the login code box while the activation code is being fetched</context>
+        </message>
+        <message>
+            <source>Code unavailable</source>
+            <translation>Código no disponible</translation>
+            <context>Shown in the login code box when the activation code could not be fetched</context>
+        </message>
     </context>
 </TS>

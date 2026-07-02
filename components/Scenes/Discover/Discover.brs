@@ -4,6 +4,8 @@ sub init()
     ' m.top.observeField("itemFocused", "onGetFocus")
     m.rowlist = m.top.findNode("homeRowList")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.statusMessage = m.top.findNode("statusMessage")
     m.rowlist.ObserveField("itemSelected", "handleItemSelected")
     m.GetContentTask = CreateObject("roSGNode", "TwitchApiTask") ' create task for feed retrieving
     ' observe content so we can know when feed content will be parsed
@@ -105,15 +107,27 @@ end function
 sub handleRecommendedSections()
     ? "handleRecommendedSections: "; TimeStamp()
     contentCollection = invalid
-    if m.GetContentTask.response.data <> invalid and m.GetContentTask.response.data.shelves <> invalid
-        contentCollection = buildContentNodeFromShelves(m.GetContentTask.response.data.shelves.edges)
-    else
-        for each error in m.GetContentTask.response.errors
+    response = m.GetContentTask.response
+    if response <> invalid and response.data <> invalid and response.data.shelves <> invalid
+        contentCollection = buildContentNodeFromShelves(response.data.shelves.edges)
+    else if response <> invalid and response.errors <> invalid
+        for each error in response.errors
             ? "RESP: "; error.message
         end for
     end if
-    if contentCollection <> invalid
+    if contentCollection <> invalid and contentCollection.Count() > 0
         updateRowList(contentCollection)
+    else
+        showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+    end if
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
     end if
 end sub
 
@@ -186,6 +200,7 @@ sub updateRowList(jsonContent)
     m.rowlist.rowlabelcolor = m.global.constants.colors.twitch.purple10
     m.rowlist.visible = true
     if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid then m.statusMessage.visible = false
 end sub
 
 sub handleItemSelected()

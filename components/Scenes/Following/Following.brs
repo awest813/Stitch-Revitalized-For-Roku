@@ -4,6 +4,8 @@ sub init()
     ' m.top.observeField("itemFocused", "onGetFocus")
     m.rowlist = m.top.findNode("homeRowList")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.statusMessage = m.top.findNode("statusMessage")
     ' m.allChannels = m.top.findNode("allChannels")
     ' m.allChannels.observeField("itemSelected", "handleItemSelected")
     m.rowlist.ObserveField("itemSelected", "handleItemSelected")
@@ -27,6 +29,24 @@ sub decideRoute()
     else
         ? "Route -> handleDefaultSections"
         handleDefaultSections()
+    end if
+    ' Nothing made it into the list: tell the user why instead of leaving a blank page
+    if m.rowlist.content = invalid or m.rowlist.content.getChildCount() = 0
+        response = m.GetContentTask.response
+        if response <> invalid and response.data <> invalid
+            showStatusMessage(tr("Nothing here yet"), tr("Follow some channels and they will show up here."))
+        else
+            showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+        end if
+    end if
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
     end if
 end sub
 

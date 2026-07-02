@@ -3,6 +3,8 @@ sub init()
     ' m.top.observeField("itemFocused", "onGetFocus")
     m.rowList = m.top.findNode("homeRowList")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.statusMessage = m.top.findNode("statusMessage")
 
     ' Guard check for missing node
     if m.rowlist = invalid
@@ -58,12 +60,24 @@ sub handleRecommendedSections()
             end if
         end if
         updateRowList(contentCollection)
-    else
-        for each error in m.GetContentTask.response.errors
-            ' ? "RESP: "; error.message
-        end for
+    end if
+    ' Show a message instead of a blank page, but never wipe already-loaded rows
+    ' when a pagination request fails
+    if m.rowList.content = invalid or m.rowList.content.getChildCount() = 0
+        showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+    else if m.statusMessage <> invalid
+        m.statusMessage.visible = false
     end if
     m.top.buffer = false
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
+    end if
 end sub
 
 sub appendMoreRows()

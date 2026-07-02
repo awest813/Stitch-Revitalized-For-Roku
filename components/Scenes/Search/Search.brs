@@ -11,6 +11,10 @@ sub init()
     m.kb.observefield("text", "handleTextInput")
     m.rowlist = m.top.findNode("homeRowList")
     m.rowlist.ObserveField("itemSelected", "handleItemSelected")
+    m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.loadingSpinner.visible = false
+    m.statusMessage = m.top.findNode("statusMessage")
     updateRecents()
 end sub
 
@@ -63,6 +67,8 @@ sub handleTextInput()
     if m.kb.text <> invalid and m.kb.text <> ""
         m.rowlist.visible = false
         m.rowlist.content = invalid
+        if m.statusMessage <> invalid then m.statusMessage.visible = false
+        if m.loadingSpinner <> invalid then m.loadingSpinner.visible = true
         m.GetContentTask = CreateObject("roSGNode", "TwitchApiTask") ' create task for feed retrieving
         ' observe content so we can know when feed content will be parsed
         m.GetContentTask.observeField("response", "handleRecommendedSections")
@@ -75,12 +81,20 @@ sub handleTextInput()
 end sub
 
 sub handleRecommendedSections()
-    if m.GetContentTask?.response?.data <> invalid
-        ' ?"data: "; m.GetContentTask.response.data
-        if m.GetContentTask?.response?.data?.searchFor <> invalid
-            ' ? "searchFor: "m.GetContentTask.response.data.searchFor
-            buildContentNodeFromShelves(m.GetContentTask.response.data.searchFor)
-        end if
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.GetContentTask?.response?.data?.searchFor <> invalid
+        buildContentNodeFromShelves(m.GetContentTask.response.data.searchFor)
+    else
+        showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+    end if
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
     end if
 end sub
 
@@ -89,7 +103,13 @@ sub buildContentNodeFromShelves(shelves)
     Users = []
     Games = []
     Vods = []
-    for each item in shelves.channels.items
+    channelItems = []
+    gameItems = []
+    vodItems = []
+    if shelves.channels <> invalid and shelves.channels.items <> invalid then channelItems = shelves.channels.items
+    if shelves.games <> invalid and shelves.games.items <> invalid then gameItems = shelves.games.items
+    if shelves.videos <> invalid and shelves.videos.items <> invalid then vodItems = shelves.videos.items
+    for each item in channelItems
         rowItem = {}
         if item.stream <> invalid
             rowItem.contentType = "LIVE"
@@ -127,7 +147,7 @@ sub buildContentNodeFromShelves(shelves)
             Users.push(rowItem)
         end if
     end for
-    for each game in shelves.games.items
+    for each game in gameItems
         rowItem = {}
         rowItem.contentId = game.Id
         rowItem.contentType = "GAME"
@@ -139,7 +159,7 @@ sub buildContentNodeFromShelves(shelves)
         rowItem.gameName = game.name
         Games.push(rowItem)
     end for
-    for each VOD in shelves.videos.items
+    for each VOD in vodItems
         rowItem = {}
         rowItem.contentType = "VOD"
         rowItem.contentId = VOD.Id
@@ -213,6 +233,11 @@ sub buildContentNodeFromShelves(shelves)
         rowHeights.push(275)
         AllContent.appendchild(fourthRow)
     end if
+    if AllContent.getChildCount() = 0
+        showStatusMessage(tr("No results found"), tr("Try a different search term."))
+        return
+    end if
+    if m.statusMessage <> invalid then m.statusMessage.visible = false
     m.rowlist.visible = false
     m.rowlist.content = AllContent
     m.rowlist.rowHeights = rowHeights

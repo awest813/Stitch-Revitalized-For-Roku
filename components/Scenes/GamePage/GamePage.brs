@@ -3,6 +3,9 @@ sub init()
     m.top.observeField("focusedChild", "onGetfocus")
     ' m.top.observeField("itemFocused", "onGetFocus")
     m.rowlist = m.top.findNode("homeRowList")
+    m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.statusMessage = m.top.findNode("statusMessage")
     m.rowlist.ObserveField("itemSelected", "handleItemSelected")
 end sub
 
@@ -53,6 +56,10 @@ function buildContentNodeFromShelves(streams)
             contentCollection.appendChild(row)
         end if
     end for
+    ' Keep the trailing partial row instead of dropping its items
+    if row.getChildCount() > 0 and row.getChildCount() < itemsPerRow
+        contentCollection.appendChild(row)
+    end if
     return contentCollection
 end function
 
@@ -94,8 +101,29 @@ end sub
 
 
 sub handleRecommendedSections()
-    contentCollection = buildContentNodeFromShelves(m.GetContentTask.response.data.game.streams.edges)
-    updateRowList(contentCollection)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    contentCollection = invalid
+    response = m.GetContentTask.response
+    if response <> invalid and response.data <> invalid and response.data.game <> invalid and response.data.game.streams <> invalid and response.data.game.streams.edges <> invalid
+        contentCollection = buildContentNodeFromShelves(response.data.game.streams.edges)
+    end if
+    if contentCollection <> invalid and contentCollection.getChildCount() > 0
+        if m.statusMessage <> invalid then m.statusMessage.visible = false
+        updateRowList(contentCollection)
+    else if response <> invalid and response.data <> invalid
+        showStatusMessage(tr("No live channels"), tr("Nobody is streaming this category right now."))
+    else
+        showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+    end if
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
+    end if
 end sub
 
 sub handleItemSelected()

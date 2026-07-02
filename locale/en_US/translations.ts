@@ -121,5 +121,55 @@
             <translation>VODs</translation>
             <context>Shown above a list of past stream broadcasts in the search results page</context>
         </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Something went wrong</translation>
+            <context>Title of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Check your internet connection and try again.</source>
+            <translation>Check your internet connection and try again.</translation>
+            <context>Subtitle of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Nothing here yet</source>
+            <translation>Nothing here yet</translation>
+            <context>Title shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>Follow some channels and they will show up here.</source>
+            <translation>Follow some channels and they will show up here.</translation>
+            <context>Subtitle shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>No live channels</source>
+            <translation>No live channels</translation>
+            <context>Title shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>Nobody is streaming this category right now.</source>
+            <translation>Nobody is streaming this category right now.</translation>
+            <context>Subtitle shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>No results found</source>
+            <translation>No results found</translation>
+            <context>Title shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Try a different search term.</source>
+            <translation>Try a different search term.</translation>
+            <context>Subtitle shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Requesting code...</source>
+            <translation>Requesting code...</translation>
+            <context>Placeholder shown in the login code box while the activation code is being fetched</context>
+        </message>
+        <message>
+            <source>Code unavailable</source>
+            <translation>Code unavailable</translation>
+            <context>Shown in the login code box when the activation code could not be fetched</context>
+        </message>
     </context>
 </TS>

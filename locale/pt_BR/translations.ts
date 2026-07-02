@@ -118,8 +118,58 @@
         </message>
         <message>
             <source>VODs</source>
-            <translation>TransmissÃµes anteriores</translation>
+            <translation>Transmissões anteriores</translation>
             <context>Shown above a list of past stream broadcasts in the search results page</context>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Algo deu errado</translation>
+            <context>Title of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Check your internet connection and try again.</source>
+            <translation>Verifique sua conexão com a internet e tente novamente.</translation>
+            <context>Subtitle of the error message shown when a page fails to load</context>
+        </message>
+        <message>
+            <source>Nothing here yet</source>
+            <translation>Nada por aqui ainda</translation>
+            <context>Title shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>Follow some channels and they will show up here.</source>
+            <translation>Siga alguns canais e eles aparecerão aqui.</translation>
+            <context>Subtitle shown on the Following page when the user follows no channels</context>
+        </message>
+        <message>
+            <source>No live channels</source>
+            <translation>Nenhum canal ao vivo</translation>
+            <context>Title shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>Nobody is streaming this category right now.</source>
+            <translation>Ninguém está transmitindo nesta categoria no momento.</translation>
+            <context>Subtitle shown on a category page when nobody is streaming it</context>
+        </message>
+        <message>
+            <source>No results found</source>
+            <translation>Nenhum resultado encontrado</translation>
+            <context>Title shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Try a different search term.</source>
+            <translation>Tente um termo de busca diferente.</translation>
+            <context>Subtitle shown on the search page when a query returns nothing</context>
+        </message>
+        <message>
+            <source>Requesting code...</source>
+            <translation>Solicitando código...</translation>
+            <context>Placeholder shown in the login code box while the activation code is being fetched</context>
+        </message>
+        <message>
+            <source>Code unavailable</source>
+            <translation>Código indisponível</translation>
+            <context>Shown in the login code box when the activation code could not be fetched</context>
         </message>
     </context>
 </TS>

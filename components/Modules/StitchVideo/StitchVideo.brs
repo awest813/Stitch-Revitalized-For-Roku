@@ -47,6 +47,7 @@ sub init()
     ' Loading overlay
     m.loadingOverlay = m.top.findNode("loadingOverlay")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
 
     ' Quality dialog
     m.qualityDialog = m.top.findNode("QualityDialog")

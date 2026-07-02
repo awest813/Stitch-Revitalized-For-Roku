@@ -60,6 +60,7 @@ sub init()
     m.loadingOverlay = m.top.findNode("loadingOverlay")
     m.loadingText = m.top.findNode("loadingText")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
 
     ' Video info
     m.videoTitle = m.top.findNode("videoTitle")

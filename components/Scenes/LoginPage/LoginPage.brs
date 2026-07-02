@@ -54,7 +54,11 @@ sub handleRendezvouzToken()
     ? "handle Rendezvouz token"
     if m.RendezvouzTask <> invalid
         response = m.RendezvouzTask.response
-        ' ? "Response "; response
+        if response = invalid or response.user_code = invalid or response.device_code = invalid
+            m.code.text = tr("Code unavailable")
+            m.bottomText.text = tr("Check your internet connection and try again.")
+            return
+        end if
         set_user_setting("temp_device_code", response.device_code)
         m.code.text = response.user_code
         m.OauthTask = CreateObject("roSGNode", "TwitchApiTask") ' create task for feed retrieving
@@ -92,6 +96,7 @@ sub RunContentTask()
         m.top.contentSelected = content
     else
         ? "[LoginPage] - RunContentTask"
+        m.code.text = tr("Requesting code...")
         m.code.visible = true
         m.loginText.visible = true
         m.bottomText.visible = true

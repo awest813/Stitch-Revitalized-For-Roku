@@ -3,6 +3,8 @@ sub init()
     ' m.top.observeField("itemFocused", "onGetFocus")
     m.rowlist = m.top.findNode("homeRowList")
     m.loadingSpinner = m.top.findNode("loadingSpinner")
+    initLoadingSpinner(m.loadingSpinner)
+    m.statusMessage = m.top.findNode("statusMessage")
     m.rowlist.ObserveField("itemSelected", "handleItemSelected")
     m.rowlist.observeField("itemHasFocus", "handleItemFocus")
     m.GetContentTask = CreateObject("roSGNode", "TwitchApiTask") ' create task for feed retrieving
@@ -43,6 +45,10 @@ function buildContentNodeFromShelves(games)
             contentCollection.appendChild(row)
         end if
     end for
+    ' Keep the trailing partial row instead of dropping its items
+    if row.getChildCount() > 0 and row.getChildCount() < 5
+        contentCollection.appendChild(row)
+    end if
     return contentCollection
 end function
 
@@ -61,13 +67,25 @@ sub handleRecommendedSections()
             end if
         end if
         updateRowList(contentCollection)
-    else
-        for each error in m.GetContentTask.response.errors
-            ' ? "RESP: "; error.message
-        end for
+    end if
+    ' Show a message instead of a blank page, but never wipe already-loaded rows
+    ' when a pagination request fails
+    if m.rowlist.content = invalid or m.rowlist.content.getChildCount() = 0
+        showStatusMessage(tr("Something went wrong"), tr("Check your internet connection and try again."))
+    else if m.statusMessage <> invalid
+        m.statusMessage.visible = false
     end if
 
     m.top.buffer = false
+end sub
+
+sub showStatusMessage(title, subtitle)
+    if m.loadingSpinner <> invalid then m.loadingSpinner.visible = false
+    if m.statusMessage <> invalid
+        m.statusMessage.title = title
+        m.statusMessage.subtitle = subtitle
+        m.statusMessage.visible = true
+    end if
 end sub
 
 sub appendMoreRows()

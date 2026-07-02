@@ -270,9 +270,8 @@
                 itemSpacings="[15]">
                 
                 <!-- Spinner -->
-                <BusySpinner 
+                <BusySpinner
                     id="loadingSpinner"
-                    uri="pkg:/images/spinner.png"
                     spinInterval="1" />
                 
                 <!-- Text -->

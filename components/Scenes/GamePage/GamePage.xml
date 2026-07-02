@@ -42,6 +42,8 @@
             vertFocusAnimationStyle="fixedFocus"
             rowFocusAnimationStyle="floatingFocus"
         />
+        <BusySpinner id="loadingSpinner" translation="[608, 348]" />
+        <StatusMessage id="statusMessage" translation="[640, 340]" visible="false" />
     </children>
 
 </component>

@@ -5,6 +5,23 @@ All notable changes to Twaruto are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Empty and error states across all browse pages (Discover, Following, Live Channels, Categories, Search, category pages) — pages now explain what happened instead of showing a blank screen when a request fails or returns nothing
+- Loading spinners on the Search results pane and category (game) pages
+- Spanish and Portuguese translations for all new status messages
+
+### Fixed
+- Loading spinners on browse pages and the video player overlay never rendered (the `BusySpinner` nodes had no poster image); they now show a centered spinning indicator
+- App crash when opening a category page while offline or when the category lookup fails
+- Channel pages no longer crash when the channel info request fails or returns partial data
+- Categories and category pages silently dropped the last row of results when the item count wasn't a multiple of the row size
+- Login screen now shows a placeholder while the activation code is being requested, and a clear message if the code can't be fetched
+- Failed pagination on Live Channels/Categories no longer risks crashing the page
+- "Live Stream" row title on channel pages is now localized
+- Fixed corrupted characters in the Portuguese "VODs" translation
+
 ## [2.6.0] - 2026-06-10
 
 First public release from the [awest813/Stitch-Revitalized-For-Roku](https://github.com/awest813/Stitch-Revitalized-For-Roku) fork.

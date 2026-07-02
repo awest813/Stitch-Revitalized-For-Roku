@@ -48,7 +48,7 @@ end sub
 sub setBannerImage()
     bannerGroup = m.top.findNode("banner")
     poster = createObject("roSGNode", "Poster")
-    if m.GetShellTask.response.data.userOrError.bannerImageUrl <> invalid
+    if m.GetShellTask?.response?.data?.userOrError?.bannerImageUrl <> invalid
         poster.uri = m.GetShellTask.response.data.userOrError.bannerImageUrl
     else
         poster.uri = "pkg:/images/default_banner.png"
@@ -83,21 +83,30 @@ sub updateChannelInfo()
     ' followers         : @{totalCount=11870230}
     ' profileImageURL   : https://static-cdn.jtvnw.net/jtv_user_pictures/xqc-profile_image-9298dca608632101-70x70.jpeg
     ' profileViewCount  :
-    m.description.infoText = m.GetcontentTask.response.data.channel.description
-    m.followers.text = numberToText(m.GetcontentTask.response.data.channel.followers.totalCount) + " " + tr("followers")
-    m.avatar.uri = m.GetcontentTask.response.data.channel.profileImageUrl
+    channel = m.GetcontentTask?.response?.data?.channel
+    if channel = invalid then return
+    if channel.description <> invalid
+        m.description.infoText = channel.description
+    end if
+    if channel.followers <> invalid and channel.followers.totalCount <> invalid
+        m.followers.text = numberToText(channel.followers.totalCount) + " " + tr("followers")
+    end if
+    if channel.profileImageUrl <> invalid
+        m.avatar.uri = channel.profileImageUrl
+    end if
     channelContent = buildContentNodeFromShelves(m.GetcontentTask.response.data)
     updateRowList(channelContent)
-    ' ? "Resp: "; m.GetcontentTask.response
-    ' ? "Resp: "; m.GetcontentTask.response.data
 end sub
 
 function buildContentNodeFromShelves(inputData)
-    shelves = inputData.channel.videoShelves.edges
+    shelves = []
+    if inputData.channel.videoShelves <> invalid and inputData.channel.videoShelves.edges <> invalid
+        shelves = inputData.channel.videoShelves.edges
+    end if
     contentCollection = createObject("RoSGNode", "ContentNode")
     if inputData.channel.stream <> invalid
         row = createObject("RoSGNode", "ContentNode")
-        row.title = "Live Stream"
+        row.title = tr("Live Stream")
         rowItem = m.top.contentRequested
         row.appendChild(rowItem)
         contentCollection.appendChild(row)

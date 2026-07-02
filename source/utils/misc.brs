@@ -2,6 +2,17 @@ function isNodeEvent(msg, field as string) as boolean
     return type(msg) = "roSGNodeEvent" and msg.getField() = field
 end function
 
+' BusySpinner ships without a default poster image, so a bare <BusySpinner />
+' renders nothing. Give it the shared spinner artwork and start it rotating.
+sub initLoadingSpinner(spinner as object)
+    if spinner = invalid then return
+    spinner.poster.uri = "pkg:/images/spinner.png"
+    spinner.poster.width = 64
+    spinner.poster.height = 64
+    spinner.spinInterval = 1
+    spinner.control = "start"
+end sub
+
 
 function getMsgPicker(msg, subnode = "" as string) as object
     node = msg.getRoSGNode()
